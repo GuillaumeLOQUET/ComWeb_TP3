@@ -1,21 +1,32 @@
-function ajaxRequest(type,url){
-    let xhr = new XMLHttpRequest();
-    xhr.open(type,url);
+function printHour(data) {
+    document.getElementById("title").innerHTML = data[0];
+    document.getElementById("detail").innerHTML = "<span style=\"color:#0000FF\";>**** Détail ****</span> <br />hours : " + data[1].hours + "<br />minutes : " + data[1].minutes + "<br />seconds : " + data[1].seconds;
 
-    xhr.onload = () => {
-        switch(xhr.status){
-            case 200:
-            case 201: console.log(xhr.responseText);
+    let time = [];
+    time.push(data[1].hours);
+    time.push(data[1].minutes);
+    time.push(data[1].seconds);
+    displayClock(time);
 
-                break; 
-            default: console.log("text");
-        }
+    setTimeout(ajaxRequest('GET','php/time.php', printHour), 1000);
+}
+
+function ajaxRequest(type, url, callback){
+    let request = new XMLHttpRequest();
+    request.open(type, url);
+
+    request.onload = () => {
+        let json = request.responseText;
+        let data = JSON.parse(json);
+        callback(data);
     };
 
-    xhr.send();
+    request.send();
+    
 }
 
 function main(){
-    ajaxRequest('Get','php/time.php');
-}
-main();
+        ajaxRequest('GET','php/time.php', printHour);
+    }
+    
+    main();

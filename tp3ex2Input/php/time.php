@@ -1,9 +1,9 @@
 <?php
-$date = getdate();
-$h = $date[hours];
-$m = $date[minutes];
-$s = $adte[seconds];
-$tab = array("Il est : $h:$m:$s",array("hours"=> $h,"minutes" => $m,"seconds" => $s);
-$json = json_encode($tab);
+$today = getdate();
+
+$data = array('Il est : '.$today[hours].':'.$today[minutes].':'.$today[seconds], array("hours" => $today[hours], "minutes" => $today[minutes], "seconds" => $today[seconds]));
+
+$json = json_encode($data);
+
 print_r($json);
 ?>
